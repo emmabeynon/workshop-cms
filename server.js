@@ -8,6 +8,7 @@ var girlsMessage = "This is girls!";
 function handler (request, response){
   var url = request.url;
   console.log(url);
+  var fileName = request.url.split('/').pop();
   var fileExt = request.url.split('.').pop();
   console.log(fileExt);
   if (url === "/") {
@@ -21,28 +22,20 @@ function handler (request, response){
       response.end(file);
     });
   }
-    else if (fileExt === 'css') {
+    else {
 
-      fs.readFile(__dirname + '/public/main.css', function(error, file) {
+      fs.readFile(__dirname + '/public/' + fileName, function(error, file) {
         if (error) {
           console.log(error);
           return;
         }
-        response.writeHead(200, {'Content-Type': 'text/'+fileExt});
-        response.end(file);
-      });
-
-    } else if (fileExt === 'jpg') {
-
-      fs.readFile(__dirname + '/public/image.jpg', function(error, file) {
-        if (error) {
-          console.log(error);
-          return;
+        if (fileExt === 'jpg') {
+          response.writeHead(200, {'Content-Type': 'image/'+fileExt});
+        } else {
+          response.writeHead(200, {'Content-Type': 'text/'+fileExt});
         }
-        response.writeHead(200, {'Content-Type': 'image/'+fileExt});
         response.end(file);
       });
-
     }
 
 
