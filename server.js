@@ -24,13 +24,10 @@ function handler (request, response){
   }
     else {
 
-      fs.readFile(__dirname + '/public/' + fileName, function(error, file) {
+      fs.readFile(__dirname + url, function(error, file) {
         if (error) {
           console.log(error);
           return;
-        }
-        if (fileExt === 'jpg') {
-          response.writeHead(200, {'Content-Type': 'image/'+fileExt});
         } else {
           response.writeHead(200, {'Content-Type': 'text/'+fileExt});
         }
